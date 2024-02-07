@@ -31,11 +31,11 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const totalSelectedProducts = 0;
-  const { increaseProduct, decreaseProduct } = useCart((state) => state);
+  const { increaseProduct, decreaseProduct, cart } = useCart((state) => state);
   const minProduct = 1;
   const [additionalsPrice, setAdditionalsPrice] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-
+  const [containerPrice, setContainerPrice] = useState<number>(0);
   const removeProduct = (productId: number) => {
     decreaseProduct(productId);
   };
@@ -45,6 +45,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
 
   useEffect(() => {
     let price = product.price * item.amount;
+    const container = product.container * item.amount;
     let additionalsAmount = 0;
 
     if (item.isMedium) {
@@ -58,10 +59,11 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
       additionalsAmount = getAdditionals.reduce((a, b) => a + b, 0);
       price += additionalsAmount;
     }
-    price += product.container;
+    price += container;
     setTotalPrice(price);
     setAdditionalsPrice(additionalsAmount);
-  }, [item, product.container, product.price]);
+    setContainerPrice(container);
+  }, [item, product.container, product.price, cart]);
 
   return (
     <Box
@@ -210,7 +212,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                           fontWeight={400}
                           sx={{ p: 0 }}
                         >
-                          S/{product.container.toFixed(2)}
+                          S/{containerPrice.toFixed(2)}
                         </Typography>
                       </Box>
                     </Box>
@@ -227,7 +229,12 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                   >
                     {showMore ? "VER MENOS" : "VER MAS"}
                   </Chip>
-                  <Typography level="body-xs" fontWeight={700} fontSize={16} sx={{color:"#37D150"}}>
+                  <Typography
+                    level="body-xs"
+                    fontWeight={700}
+                    fontSize={16}
+                    sx={{ color: "#37D150" }}
+                  >
                     S/{totalPrice.toFixed(2)}
                   </Typography>
                 </Grid>

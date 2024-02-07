@@ -20,7 +20,7 @@ function Home() {
         }}
       >
 
-        <Categories setCategory={setCategory} />
+        <Categories setCategory={setCategory} category={category} />
         <Typography
           level="title-sm"
           fontWeight={700}
