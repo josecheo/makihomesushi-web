@@ -27,6 +27,9 @@ export interface SelectedProducts {
 export interface ProductSelected {
     productId: number;
     amount: number;
+    totalPrice: number;
+    containerPrice: number;
+    additionalsPrice: number;
     isMedium?:boolean;
     summary: SummaryProduct;
 }

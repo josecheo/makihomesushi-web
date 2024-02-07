@@ -16,18 +16,14 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useCart } from "../../store/cart";
 
 interface CartItemBodyProps {
-  //   currentCount: number;
   product: Product;
   item: ProductSelected;
   removeItemCart: (productId: number) => void;
-  //   totalSelectedProducts: number;
 }
 const CartItemBody: React.FC<CartItemBodyProps> = ({
-  //   currentCount,
   product,
   item,
   removeItemCart,
-  //   totalSelectedProducts,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const totalSelectedProducts = 0;
@@ -36,6 +32,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
   const [additionalsPrice, setAdditionalsPrice] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [containerPrice, setContainerPrice] = useState<number>(0);
+  
   const removeProduct = (productId: number) => {
     decreaseProduct(productId);
   };

@@ -5,11 +5,11 @@ import { Product } from "../../../type.t";
 interface AddToCartProps {
   item: Product;
   quantity: number;
-  onAddToCart: (item:Product) => void;
+  onAddToCart: () => void;
 }
 
 const AddToCart: React.FC<AddToCartProps> = ({
-  item,
+  // item,
   // quantity,
   onAddToCart,
 }) => {
@@ -17,7 +17,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
 
 
   const handleClick = () => {
-    onAddToCart(item);
+    onAddToCart();
     setOpen(true);
   };
 

@@ -303,7 +303,7 @@ export const makis = [
     id: 21,
     name: "Terik Maki",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Relleno de pollo crocante, cebolla china, topping de pollo crocante, bañado en salsa teriyaki",
@@ -317,7 +317,7 @@ export const makis = [
     id: 22,
     name: "Maki Cheese Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Relleno de pescado fresco, palta, topping de platano frito, queso amarillo flameado con salsa tarek",
@@ -331,7 +331,7 @@ export const makis = [
     id: 23,
     name: "Arcoiris Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Relleno de pescado fresco, kanikama, pepino, topping de salmon, atun, palta y wakame.",
@@ -345,7 +345,7 @@ export const makis = [
     id: 24,
     name: "Crazzy Mango",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Relleno de pescado furay y mango, topping de ajonjoli, salsa fuji, flameado.",
@@ -359,7 +359,7 @@ export const makis = [
     id: 25,
     name: "Platano Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Maki tempurizado, envuelto en platano frito relleno de palta queso crema y pescado fresco. bañado en salsa tarek (salsa de angila).",
@@ -373,7 +373,7 @@ export const makis = [
     id: 26,
     name: "Tiger Roll Especial",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Maki tempurizado en hojuelas de maiz , relleno de pescado, palta y queso crema, topping de ensalada neptuno. bañado en salsa tarek.",
@@ -387,7 +387,7 @@ export const makis = [
     id: 27,
     name: "Furay Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Maki Relleno de pescado apanado ”crocante” queso crema y palta. bañado en salsa tarek (salsa de anguila).",
@@ -401,7 +401,7 @@ export const makis = [
     id: 28,
     name: "Pasific Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Maki tempurizado en hojuelas de maiz , relleno de atun fresco, cebollin y queso crema. bañado en salsa tarek (salsa de anguila).",
@@ -415,7 +415,7 @@ export const makis = [
     id: 29,
     name: "Tokio Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Relleno de pescado apanado “crocante”, queso crema, cebollín apanado (frito) toppin de pescado crocante, salsa de anguila y salsa dragón",
@@ -429,7 +429,7 @@ export const makis = [
     id: 30,
     name: "Tiger Roll",
     price: 20,
-    priceTotal:21,
+    priceTotal: 21,
     image: medio_personal,
     description:
       "Maki tempurizad, relleno de pescado fresco, palta y queso crema, bañado en salsa tarek (salsa de anguila).",
@@ -622,7 +622,7 @@ export const adicionales = [
 export const combos = [
   {
     id: 400,
-    name: "1/2 Personal ",
+    name: "1/2 Personal",
     price: 18,
     priceTotal: 19.5,
     image: medio_personal,

@@ -7,13 +7,12 @@ import CartItemBody from "./cartItemBody";
 interface CartItemsProps {}
 
 const CartItems: React.FC<CartItemsProps> = () => {
-  const { cart,removeCart } = useCart((state) => state);
+  const { cart, removeCart } = useCart((state) => state);
 
   const removeItemCart = (productId: number) => {
     const filterCart = cart.filter((el) => el.productId !== productId);
     removeCart(filterCart);
   };
-
 
   return (
     <Box
