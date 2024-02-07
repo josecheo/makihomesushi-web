@@ -1,5 +1,5 @@
-import React, { Children, useState } from "react";
-import { Product, SelectedProducts } from "../../../type.t";
+import React, { Children } from "react";
+import { Product } from "../../../type.t";
 import { useCart } from "../../store/cart";
 import { getProductFromID } from "../../utils/functions";
 import { Box } from "@mui/joy";

@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import { Product, ProductSelected } from "../../../type.t";
 import { getProductFromID } from "../../utils/functions";
 import {
@@ -33,7 +33,8 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
   const totalSelectedProducts = 0;
   const { increaseProduct, decreaseProduct } = useCart((state) => state);
   const minProduct = 1;
-
+  const [additionalsPrice, setAdditionalsPrice] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const removeProduct = (productId: number) => {
     decreaseProduct(productId);
@@ -41,6 +42,26 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
   const addProduct = (productId: number) => {
     increaseProduct(productId);
   };
+
+  useEffect(() => {
+    let price = product.price * item.amount;
+    let additionalsAmount = 0;
+
+    if (item.isMedium) {
+      price = price / 2;
+    }
+    if (item.summary.adicionales) {
+      const getAdditionals = item.summary.adicionales.map((value) => {
+        const productSummary = getProductFromID(value.productId) as Product;
+        return productSummary.price * value.amount;
+      });
+      additionalsAmount = getAdditionals.reduce((a, b) => a + b, 0);
+      price += additionalsAmount;
+    }
+    price += product.container;
+    setTotalPrice(price);
+    setAdditionalsPrice(additionalsAmount);
+  }, [item, product.container, product.price]);
 
   return (
     <Box
@@ -106,23 +127,24 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                     </Typography>
                   </Box>
                   {showMore && (
-                    <Box sx={{
-                      gap: ".4rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      mt: ".4rem",
-                    }}>
+                    <Box
+                      sx={{
+                        gap: ".4rem",
+                        display: "flex",
+                        flexDirection: "column",
+                        mt: ".4rem",
+                      }}
+                    >
                       {Object.keys(item.summary).length ? (
                         Children.toArray(
                           Object.keys(item.summary).map((key) => {
                             return (
-                              <Sheet >
+                              <Sheet>
                                 {item.summary[key].length > 0 && (
                                   <Typography level="body-xs" fontWeight={700}>
                                     {key.toUpperCase()}
                                   </Typography>
                                 )}
-
                                 {Children.toArray(
                                   item.summary[key].map((value) => {
                                     const productSummary = getProductFromID(
@@ -153,12 +175,44 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                           Sin nada adicional
                         </Typography>
                       )}
-                      <Typography level="body-xs" fontWeight={700}>
-                        ENVASES:
-                      </Typography>
-                      <Typography level="body-xs" fontWeight={400}>
-                        S/{product.container.toFixed(2)}
-                      </Typography>
+                      <Divider
+                        sx={{
+                          mt: ".4rem",
+                          mb: ".4rem",
+                        }}
+                      />
+                      <Box>
+                        <Typography
+                          level="body-xs"
+                          fontWeight={700}
+                          sx={{ p: 0 }}
+                        >
+                          PRECIO DE COMBO:
+                        </Typography>
+                        <Typography level="body-xs" fontWeight={400}>
+                          S/{product.price.toFixed(2)}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography level="body-xs" fontWeight={700}>
+                          ADICIONALES:
+                        </Typography>
+                        <Typography level="body-xs" fontWeight={400}>
+                          S/{additionalsPrice.toFixed(2)}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography level="body-xs" fontWeight={700}>
+                          ENVASES:
+                        </Typography>
+                        <Typography
+                          level="body-xs"
+                          fontWeight={400}
+                          sx={{ p: 0 }}
+                        >
+                          S/{product.container.toFixed(2)}
+                        </Typography>
+                      </Box>
                     </Box>
                   )}
                   <Chip
@@ -173,11 +227,8 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                   >
                     {showMore ? "VER MENOS" : "VER MAS"}
                   </Chip>
-                  <Typography level="body-sm" noWrap>
-                    <span>Precio:</span>{" "}
-                    <strong>
-                      S/{(product.priceTotal * item.amount).toFixed(2)}
-                    </strong>
+                  <Typography level="body-xs" fontWeight={700} fontSize={16} sx={{color:"#37D150"}}>
+                    S/{totalPrice.toFixed(2)}
                   </Typography>
                 </Grid>
               </Grid>
