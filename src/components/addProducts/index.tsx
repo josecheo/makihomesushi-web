@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Product, SelectedProducts } from "../../../type.t";
-import {
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from "@mui/joy";
-import AddRemoveButton from "../add-remove-button";
+import { Product, SelectedProducts, SummaryProduct } from "../../../type.t";
+import { AccordionDetails, AccordionSummary, Typography } from "@mui/joy";
+import ProductItem from "./productItem";
 
 interface Props {
   products: Product[];
   maxProduct: number;
   title: string;
   category: string;
+  selectedProducts?: SummaryProduct;
   handleAddProduct: (
     selectedProducts: SelectedProducts[],
-    category: string
+    category: string,
+    totalSelectedProducts: number
   ) => void;
 }
 
@@ -27,12 +24,9 @@ const AddProduct: React.FC<Props> = ({
   category,
 }) => {
   const [selected, setSelected] = useState<SelectedProducts[]>([]);
-  // const [selectedProducts, setSelectedProducts] = useState<SelectedProducts[]>(
-  //   []
-  // );
 
   useEffect(() => {
-    handleAddProduct(selected, category);
+    handleAddProduct(selected, category,totalSelectedProducts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -71,6 +65,7 @@ const AddProduct: React.FC<Props> = ({
       return newSelected;
     });
   };
+  
 
   return (
     <React.Fragment>
@@ -92,34 +87,19 @@ const AddProduct: React.FC<Props> = ({
             selected.find((el) => el.productId === product.id)?.amount || 0;
 
           return (
-            <Box
-              key={product.id}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: ".56rem 0",
-              }}
-            >
-              <Box>
-                <Typography level="body-md">{product.name}</Typography>
-                {category === "adicionales" && (
-                  <Typography level="body-md">
-                    s/{product.price.toFixed(2)}
-                  </Typography>
-                )}
-              </Box>
-              <AddRemoveButton
+            <React.Fragment key={product.id}>
+              <ProductItem
                 {...{
-                  removeProduct,
-                  maxProduct,
                   product,
+                  maxProduct,
+                  category,
+                  currentCount,
+                  removeProduct,
                   addProduct,
                   totalSelectedProducts,
-                  currentCount,
                 }}
               />
-            </Box>
+            </React.Fragment>
           );
         })}
       </AccordionDetails>

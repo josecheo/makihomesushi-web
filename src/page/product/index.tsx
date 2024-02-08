@@ -5,6 +5,7 @@ import arrow from "../../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 import ProductInfo from "../../components/product-info/index.tsx";
 import CartButton from "../../components/cart/index.tsx";
+import { useEffect } from "react";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -13,6 +14,11 @@ const ProductPage = () => {
   const filteredProducts = products.find(
     (product) => product.id === Number(id)
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+ 
+  }, []);
 
   const handleBackClick = () => {
     navigate(`/`);
@@ -34,7 +40,7 @@ const ProductPage = () => {
         }}
       >
         <div style={{ position: "absolute", top: 10, right: 20, zIndex: 3 }}>
-        <CartButton />
+          <CartButton />
         </div>
         <img
           onClick={handleBackClick}
@@ -49,7 +55,13 @@ const ProductPage = () => {
           loading="lazy"
           width={"100%"}
           height={"300px"}
-          style={{ position: "absolute", top: 0, left: 0, zIndex: 1, objectFit: "cover"}}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 1,
+            objectFit: "cover",
+          }}
           alt={filteredProducts.name}
         />
       </Box>

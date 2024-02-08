@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Product } from "../../type.t.ts";
+
 import { products } from "./data.tsx";
 
 export const getProductFromID = (id: number) => {
@@ -8,21 +8,20 @@ export const getProductFromID = (id: number) => {
 };
 
 export function buildMessage(order: any[]) {
-  const messages: any = [];
+  let message = "";
 
   order.forEach((item) => {
     const items = item.summary;
     const product = getProductFromID(item.productId);
-    let message = `*${product?.name.toUpperCase()}*\n`;
-    message += `${product?.description}\n`;
+    message += `*${item.isMedium ? "½" : ""} ${product?.name.toUpperCase()}*\n`;
 
     for (const category in items) {
       if (Object.prototype.hasOwnProperty.call(items, category)) {
         if (items[category].length > 0) {
-          message += `*${category}*\n`;
+          message += `🔸 *${category.toUpperCase()}:*\n`;
           items[category].forEach(
             (subItem: { amount: any; productId: any }) => {
-              message += `x${subItem.amount} ${
+              message += `  • ${subItem.amount}x ${
                 getProductFromID(subItem.productId)?.name
               }\n`;
             }
@@ -34,16 +33,14 @@ export function buildMessage(order: any[]) {
     const totalPrice = item.totalPrice;
     const additionalPrice = item.additionalsPrice;
     const containerPrice = item.containerPrice;
-    message += `-----------------------\n`;
-    message += `*PRECIO DE COMBO:*\nS/${product?.price.toFixed(2)}\n`;
-    message += `*ADICIONALES:*\nS/${additionalPrice.toFixed(2)}\n`;
-    message += `*ENVASES:*\nS/${containerPrice.toFixed(2)}\n`;
-    message += `-----------------------\n`;
-    message += `*PRECIO DE TOTAL:*\n*S/${totalPrice.toFixed(2)}*\n`;
-    message += `-----------------------\n`;
+    const basePrice = item.basePrice;
 
-    messages.push(message);
+    message += `🛒 Precio Base: S/${basePrice.toFixed(2)}\n`;
+    message += `🛍️ Adicionales: S/${additionalPrice.toFixed(2)}\n`;
+    message += `📦 Envases: S/${containerPrice.toFixed(2)}\n`;
+    message += `💰 *Subtotal: S/${totalPrice.toFixed(2)}*\n`;
+    message += `-----------------------------------------------\n`;
   });
 
-  return messages;
+  return message;
 }

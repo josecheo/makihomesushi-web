@@ -1,4 +1,4 @@
-import { Children, useEffect, useState } from "react";
+import { Children, useState } from "react";
 import { Product, ProductSelected } from "../../../type.t";
 import { getProductFromID } from "../../utils/functions";
 import {
@@ -11,14 +11,13 @@ import {
   Sheet,
   Typography,
 } from "@mui/joy";
-import AddRemoveButton from "../add-remove-button";
+
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { useCart } from "../../store/cart";
 
 interface CartItemBodyProps {
   product: Product;
   item: ProductSelected;
-  removeItemCart: (productId: number) => void;
+  removeItemCart: (productId: string) => void;
 }
 const CartItemBody: React.FC<CartItemBodyProps> = ({
   product,
@@ -26,59 +25,26 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
   removeItemCart,
 }) => {
   const [showMore, setShowMore] = useState(false);
-  const totalSelectedProducts = 0;
-  const { increaseProduct, decreaseProduct, cart } = useCart((state) => state);
-  const minProduct = 1;
-  const [additionalsPrice, setAdditionalsPrice] = useState<number>(0);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [containerPrice, setContainerPrice] = useState<number>(0);
-  
-  const removeProduct = (productId: number) => {
-    decreaseProduct(productId);
-  };
-  const addProduct = (productId: number) => {
-    increaseProduct(productId);
-  };
-
-  useEffect(() => {
-    let price = product.price * item.amount;
-    const container = product.container * item.amount;
-    let additionalsAmount = 0;
-
-    if (item.isMedium) {
-      price = price / 2;
-    }
-    if (item.summary.adicionales) {
-      const getAdditionals = item.summary.adicionales.map((value) => {
-        const productSummary = getProductFromID(value.productId) as Product;
-        return productSummary.price * value.amount;
-      });
-      additionalsAmount = getAdditionals.reduce((a, b) => a + b, 0);
-      price += additionalsAmount;
-    }
-    price += container;
-    setTotalPrice(price);
-    setAdditionalsPrice(additionalsAmount);
-    setContainerPrice(container);
-  }, [item, product.container, product.price, cart]);
 
   return (
     <Box
       sx={{
-        height: showMore ? "100%" : "130px",
-        overflow: showMore ? "none" : "hidden",
+        height: showMore ? "auto" : "130px",
+        overflowX: "hidden",
         justifyContent: "center",
         alignContent: "center",
       }}
     >
       <Box
-        sx={{
-          padding: ".4rem",
-          height: "100%",
-        }}
+        sx={
+          {
+            // padding: ".4rem",
+            // height: "100%",
+          }
+        }
       >
         <Grid container spacing={2}>
-          <Grid xs={2}>
+          {/* <Grid xs={2}>
             <AddRemoveButton
               {...{
                 removeProduct,
@@ -91,9 +57,9 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                 vertical: true,
               }}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid xs={8}>
+          <Grid xs={10}>
             <Box>
               <Grid container spacing={2}>
                 <Grid xs={4}>
@@ -110,7 +76,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                 </Grid>
                 <Grid xs={8}>
                   <Typography level="title-lg" fontWeight={600} fontSize={14}>
-                    {product.name.toUpperCase()}
+                    {item.isMedium ? "½" : ""} {product.name.toUpperCase()}
                   </Typography>
                   <Box
                     sx={{
@@ -138,7 +104,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                         Children.toArray(
                           Object.keys(item.summary).map((key) => {
                             return (
-                              <Sheet>
+                              <Sheet key={item.idCart}>
                                 {item.summary[key].length > 0 && (
                                   <Typography level="body-xs" fontWeight={700}>
                                     {key.toUpperCase()}
@@ -152,6 +118,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                                     if (productSummary) {
                                       return (
                                         <Typography
+                                          key={item.idCart}
                                           level="body-xs"
                                           fontWeight={400}
                                         >
@@ -186,10 +153,10 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                           fontWeight={700}
                           sx={{ p: 0 }}
                         >
-                          PRECIO DE COMBO:
+                          PRECIO BASE:
                         </Typography>
                         <Typography level="body-xs" fontWeight={400}>
-                          S/{product.price.toFixed(2)}
+                          S/{item.basePrice.toFixed(2)}
                         </Typography>
                       </Box>
                       <Box>
@@ -197,7 +164,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                           ADICIONALES:
                         </Typography>
                         <Typography level="body-xs" fontWeight={400}>
-                          S/{additionalsPrice.toFixed(2)}
+                          S/{item.additionalsPrice.toFixed(2)}
                         </Typography>
                       </Box>
                       <Box>
@@ -209,7 +176,7 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                           fontWeight={400}
                           sx={{ p: 0 }}
                         >
-                          S/{containerPrice.toFixed(2)}
+                          S/{item.containerPrice.toFixed(2)}
                         </Typography>
                       </Box>
                     </Box>
@@ -232,14 +199,14 @@ const CartItemBody: React.FC<CartItemBodyProps> = ({
                     fontSize={16}
                     sx={{ color: "#37D150" }}
                   >
-                    S/{totalPrice.toFixed(2)}
+                    S/{item.totalPrice.toFixed(2)}
                   </Typography>
                 </Grid>
               </Grid>
             </Box>
           </Grid>
           <Grid xs={2}>
-            <IconButton size="sm" onClick={() => removeItemCart(product.id)}>
+            <IconButton size="sm" onClick={() => removeItemCart(item.idCart)}>
               <DeleteOutlinedIcon />
             </IconButton>
           </Grid>

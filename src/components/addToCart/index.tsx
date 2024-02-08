@@ -6,19 +6,26 @@ interface AddToCartProps {
   item: Product;
   quantity: number;
   onAddToCart: () => void;
+  handleValidate: () => boolean;
 }
 
 const AddToCart: React.FC<AddToCartProps> = ({
-  // item,
-  // quantity,
   onAddToCart,
+  handleValidate,
 }) => {
   const [open, setOpen] = React.useState(false);
-
+  const [error, setError] = React.useState(false);
 
   const handleClick = () => {
-    onAddToCart();
-    setOpen(true);
+ 
+    if (handleValidate()) {
+      onAddToCart();
+      setOpen(true);
+      setError(false);
+    } else {
+      setOpen(true);
+      setError(true);
+    }
   };
 
   return (
@@ -31,7 +38,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
         autoHideDuration={2000}
         open={open}
         variant={"soft"}
-        color={"success"}
+        color={error ? "danger" : "success"}
         onClose={(_event, reason) => {
           if (reason === "clickaway") {
             return;
@@ -39,7 +46,9 @@ const AddToCart: React.FC<AddToCartProps> = ({
           setOpen(false);
         }}
       >
-        Agregado al carrito exitosamente!
+        {error
+          ? "Debe seleccionar los todos los sabores"
+          : "Agregado al carrito exitosamente!"}
       </Snackbar>
     </Box>
   );

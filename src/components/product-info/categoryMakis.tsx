@@ -15,7 +15,8 @@ interface ProductInfoProps {
   filteredProducts: Product;
   handleAddProduct: (
     selectedProducts: SelectedProducts[],
-    category: string
+    category: string,
+    totalSelectedProducts: number
   ) => void;
   selectedProducts: SummaryProduct;
   setProductSelected: React.Dispatch<React.SetStateAction<ProductSelected>>;

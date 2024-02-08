@@ -13,11 +13,13 @@
   padding: 2px;
 }
 .categories_arrow_right {
-    -webkit-box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
-    box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 99999px;
-    padding: 2px;
-    transform: rotate(180deg);
+  -webkit-box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 7px 7px 9px -6px rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 99999px;
+  padding: 2px;
+  transform: rotate(180deg);
 }
+
+

@@ -32,8 +32,14 @@ export interface ProductSelected {
     additionalsPrice: number;
     isMedium?:boolean;
     summary: SummaryProduct;
+    basePrice: number;
+    idCart: string;
 }
 
 export interface SummaryProduct {
     [key: string]: SelectedProducts[];
+}
+
+export interface ValidateObjectType { 
+    [key: string]: number;
 }
